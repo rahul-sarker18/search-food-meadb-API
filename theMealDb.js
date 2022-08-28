@@ -10,9 +10,9 @@ const secend=(cards) =>{
     cards.forEach(element => {
         const newDiv =document.createElement('div');
         newDiv.classList.add('col');
-        console.log(element)
+        // console.log(element)
         newDiv.innerHTML =`
-            <div class="card">
+            <div onclick="clickHendelar(${element.idMeal})" class="card">
                 <img src="${element.strMealThumb}" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title">${element.strMeal}</h5>
@@ -23,7 +23,7 @@ const secend=(cards) =>{
         div.appendChild(newDiv)
     });
 }
-fast('a')
+fast('');
 
 
 document.getElementById('btn').addEventListener('click', function(){
@@ -33,3 +33,26 @@ document.getElementById('btn').addEventListener('click', function(){
     inputDiv.value ='';
     
 })
+
+const clickHendelar=(click)=>{
+    const url =`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${click}`;
+    fetch(url)
+    .then(res => res.json())
+    .then(input => displys(input.meals[0]))
+}
+
+
+const displys =(slictProducts)=>{
+    console.log(slictProducts)
+
+    const stayDive =document.getElementById('detalsDisply');
+    stayDive.innerHTML=`
+    <div class="card" >
+          <img src="${slictProducts.strMealThumb}" class="card-img-top" alt="...">
+        <div class="card-body">
+            <h5 class="card-title">food name:${slictProducts.strMeal}</h5>
+            <h4 class="card-text">country name: ${slictProducts.strArea} </h4>   
+        </div>
+    </div>
+    `
+}
